@@ -7,14 +7,14 @@ const isGuest = user === 'guest' && pass === 'Guest123';
 
 if (isAdmin || isGuest) {
 
-    window.location.href = 'style/style.html';
+    window.location.href = 'Dashboard.html';
 } else {
     alert('Username atau Password salah! Silakan gunakan kredensial yang telah disediakan.');
 }
 }
 
 function logout() {
-window.location.href = 'login.html';
+window.location.href = 'index.html';
 }
 
 function hapusBarisTabel(id) {
