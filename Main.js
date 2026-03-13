@@ -1,5 +1,5 @@
 function logout() {
-  window.location.href = 'Login.html';
+  window.location.href = '../Login.html';
 }
 
 function switchView(viewId) {
