@@ -43,6 +43,6 @@ Berikut adalah hasil pengujian aplikasi berdasarkan aspek kualitas perangkat lun
 ## 💻 Cara Menjalankan Aplikasi
 1. *Clone repository* ini ke komputer lokal Anda.
 2. Buka folder proyek.
-3. Jalankan file `index.html` menggunakan *browser* (disarankan menggunakan ekstensi *Live Server* di VS Code untuk pengalaman terbaik).
+3. Jalankan file `index.html` menggunakan *browser*.
 4. Setelah login, aplikasi akan menuju ke `Dashboard.html`.
-5. Tidak memerlukan instalasi *library* tambahan (NPM/Node.js) karena aplikasi murni berjalan di sisi klien (Client-Side).
+5. Tidak memerlukan instalasi *library* tambahan (NPM/Node.js) karena aplikasi murni berjalan di sisi klien.
