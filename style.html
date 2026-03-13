@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - AlumniTracker</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+cyan: { 500: '#00bcd4', 600: '#00acc1' },
+orange: { 500: '#ff9800', 600: '#f57c00' }
+}
+}
+}
+}
+</script>
+</head>
+<body class="font-sans text-gray-800 overflow-hidden bg-gray-100 h-screen flex w-full">
+
+<aside class="w-64 bg-gray-900 text-gray-300 flex flex-col shadow-lg z-10 flex-shrink-0">
+<div class="h-16 flex items-center px-6 bg-gray-800 border-b border-gray-700">
+<i class="fas fa-graduation-cap text-xl mr-3 text-white"></i>
+<div>
+<h1 class="text-sm font-bold text-white tracking-wider">AlumniTracker</h1>
+</div>
+</div>
+
+<div class="flex items-center px-6 py-4 border-b border-gray-700 bg-gray-800">
+<img src="https://ui-avatars.com/api/?name=Admin+Kampus&background=0D8ABC&color=fff" alt="User" class="w-10 h-10 rounded-full mr-3">
+<div>
+<p class="text-xs text-gray-400">UNIVERSITAS NEGERI</p>
+<p class="text-xs font-semibold text-white">Admin</p>
+</div>
+</div>
+
+<nav class="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
+<div class="px-4 pb-2">
+<p class="text-xs font-semibold text-gray-500 uppercase">Menu</p>
+</div>
+<a onclick="switchView('dashboard')" id="nav-dashboard" class="cursor-pointer flex items-center px-4 py-2 bg-gray-800 text-white rounded transition-colors">
+<i class="fas fa-home w-6 text-center"></i>
+<span class="text-sm ml-2">Dashboard</span>
+</a>
+<a onclick="switchView('data')" id="nav-data" class="cursor-pointer flex items-center px-4 py-2 hover:bg-gray-800 hover:text-white rounded transition-colors text-gray-400">
+<i class="fas fa-database w-6 text-center"></i>
+<span class="text-sm ml-2">Data Alumni</span>
+</a>
+<a onclick="switchView('pelacakan')" id="nav-pelacakan" class="cursor-pointer flex items-center px-4 py-2 hover:bg-gray-800 hover:text-white rounded transition-colors text-gray-400">
+<i class="fas fa-search w-6 text-center"></i>
+<span class="text-sm ml-2">Pelacakan</span>
+</a>
+<a onclick="switchView('verifikasi')" id="nav-verifikasi" class="cursor-pointer flex items-center px-4 py-2 hover:bg-gray-800 hover:text-white rounded transition-colors text-gray-400">
+<i class="fas fa-check-double w-6 text-center"></i>
+<span class="text-sm ml-2">Verifikasi</span>
+</a>
+</nav>
+</aside>
+
+<main class="flex-1 flex flex-col overflow-hidden bg-gray-50 relative">
+<header class="h-16 bg-blue-600 flex items-center justify-between px-6 shadow z-0 text-white flex-shrink-0">
+<div></div>
+<div class="flex items-center space-x-4">
+<span class="text-sm font-medium">AK</span>
+<button onclick="logout()" class="text-sm hover:underline flex items-center">Logout</button>
+<i class="fas fa-question-circle cursor-pointer"></i>
+</div>
+</header>
+
+<div class="flex-1 overflow-y-auto p-6 relative">
+
+<div id="view-dashboard" class="block">
+<h2 class="text-2xl font-normal text-gray-700 mb-6">Dashboard</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div class="bg-cyan-500 rounded shadow-sm text-white relative overflow-hidden flex flex-col justify-between">
+    <div class="p-5 flex justify-between items-start z-10">
+      <div>
+        <h3 id="count-total" class="text-4xl font-bold mb-1">0</h3>
+        <p class="text-sm">Total Lulusan</p>
+      </div>
+      <i class="fas fa-building text-5xl opacity-30 transform translate-x-2 translate-y-2"></i>
+    </div>
+  </div>
+
+  <div class="bg-green-500 rounded shadow-sm text-white relative overflow-hidden flex flex-col justify-between">
+    <div class="p-5 flex justify-between items-start z-10">
+      <div>
+        <h3 class="text-4xl font-bold mb-1" id="count-teridentifikasi">0</h3>
+        <p class="text-sm">Teridentifikasi Publik</p>
+      </div>
+      <i class="fas fa-user text-5xl opacity-30 transform translate-x-2 translate-y-2"></i>
+    </div>
+  </div>
+
+  <div class="bg-orange-500 rounded shadow-sm text-white relative overflow-hidden flex flex-col justify-between">
+    <div class="p-5 flex justify-between items-start z-10">
+      <div>
+        <h3 class="text-4xl font-bold mb-1" id="count-verifikasi">0</h3>
+        <p class="text-sm">Perlu Verifikasi</p>
+      </div>
+      <i class="fas fa-users text-5xl opacity-30 transform translate-x-2 translate-y-2"></i>
+    </div>
+  </div>
+
+  <div class="bg-red-500 rounded shadow-sm text-white relative overflow-hidden flex flex-col justify-between">
+    <div class="p-5 flex justify-between items-start z-10">
+      <div>
+        <h3 class="text-4xl font-bold mb-1" id="count-belum">0</h3>
+        <p class="text-sm">Belum Ditemukan</p>
+      </div>
+      <i class="fas fa-question-circle text-5xl opacity-30 transform translate-x-2 translate-y-2"></i>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="col-span-1 lg:col-span-2 bg-white rounded border border-gray-200 shadow-sm overflow-hidden mb-6">
+<div class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+<h3 class="font-medium text-gray-700 text-sm">Aktivitas Pelacakan Terbaru</h3>
+<button class="text-blue-500 text-xs hover:underline" onclick="switchView('data')">Lihat Semua</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
+<tr>
+<th class="px-4 py-3 font-medium">Nama Alumni</th>
+<th class="px-4 py-3 font-medium">Tahun</th>
+<th class="px-4 py-3 font-medium">Skor</th> <th class="px-4 py-3 font-medium">Status</th>
+</tr>
+</thead>
+<tbody id="tbody-dashboard-recent" class="divide-y divide-gray-100"></tbody>
+</table>
+</div>
+</div>
+
+<div class="col-span-1">
+<div class="bg-white rounded border border-gray-200 shadow-sm overflow-hidden mb-6">
+<div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+<h3 class="font-medium text-gray-700 text-sm">Tentang Sistem</h3>
+</div>
+<div class="p-4">
+<p class="text-sm text-gray-500 mb-4">Sistem secara otomatis mengidentifikasi karir alumni melalui sumber publik seperti Google Scholar, LinkedIn, dan web kampus.</p>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between"><span class="text-gray-500">Scheduler</span><span class="text-green-600 font-medium">Aktif</span></div>
+<div class="flex justify-between"><span class="text-gray-500">Interval</span><span class="text-gray-700 font-medium">Mingguan</span></div>
+</div>
+</div>
+</div>
+<button onclick="switchView('verifikasi')" class="w-full bg-blue-600 text-white py-3 rounded font-medium shadow-sm hover:bg-blue-700 transition">
+Buka Antrian Verifikasi &rarr;
+</button>
+</div>
+</div>
+</div>
+
+<div id="view-data" class="hidden">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-normal text-gray-700">Data Alumni</h2>
+<div class="flex space-x-2">
+<input type="text" id="search-alumni" oninput="refreshUI()" placeholder="Cari nama atau NIM..." class="border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-blue-500 w-64">
+<button onclick="bukaModal()" class="bg-blue-600 text-white px-3 py-1.5 rounded text-sm hover:bg-blue-700">
+<i class="fas fa-plus mr-1"></i> Tambah</button>
+</div>
+</div>
+
+<div class="bg-white rounded border border-gray-200 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
+<tr>
+<th class="px-4 py-3 font-medium">No</th>
+<th class="px-4 py-3 font-medium">Nama Lengkap</th>
+<th class="px-4 py-3 font-medium">NIM</th>
+<th class="px-4 py-3 font-medium">Tahun</th>
+<th class="px-4 py-3 font-medium">Pekerjaan / Afiliasi</th>
+<th class="px-4 py-3 font-medium">Sumber</th>
+<th class="px-4 py-3 font-medium">Status</th>
+</tr>
+</thead>
+<tbody id="tbody-data-alumni" class="divide-y divide-gray-100"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="view-pelacakan" class="hidden">
+<h2 class="text-2xl font-normal text-gray-700 mb-6">Job Pelacakan</h2>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+<div class="col-span-1 lg:col-span-2 bg-white rounded border border-gray-200 shadow-sm p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-medium text-gray-700">Status Job Pelacakan</h3>
+<span class="text-xs text-green-600 font-medium">&bull; Scheduler Aktif</span>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-4 text-center">
+<div class="p-3 rounded border border-gray-100 bg-gray-50"><div id="track-total" class="text-2xl text-gray-700">0</div><div class="text-xs text-gray-500">Total data</div></div>
+<div class="p-3 rounded border border-green-100 bg-green-50"><div id="track-selesai" class="text-2xl text-green-700">0</div><div class="text-xs text-green-600">Selesai dilacak</div></div>
+<div class="p-3 rounded border border-yellow-100 bg-yellow-50"><div id="track-antrean" class="text-2xl text-yellow-700">0</div><div class="text-xs text-yellow-600">Dalam antrian (Baru)</div></div>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2 mb-1"><div id="track-progress-bar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div></div>
+<div id="track-progress-text" class="text-right text-xs text-gray-500">0% selesai</div>
+</div>
+
+<div class="col-span-1 bg-white rounded border border-gray-200 shadow-sm p-6">
+<h3 class="font-medium text-gray-700 mb-4">Konfigurasi Sumber</h3>
+<div class="space-y-4 text-sm text-gray-600">
+<div class="flex justify-between items-center">
+<span id="label-scholar" class="text-gray-700">Google Scholar</span> 
+<button id="src-scholar" onclick="toggleSumber('src-scholar')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs w-12 text-center transition-colors">ON</button>
+</div>
+<div class="flex justify-between items-center">
+<span id="label-orcid" class="text-gray-700">ORCID</span> 
+<button id="src-orcid" onclick="toggleSumber('src-orcid')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs w-12 text-center transition-colors">ON</button>
+</div>
+<div class="flex justify-between items-center">
+<span id="label-linkedin" class="text-gray-700">LinkedIn (Web)</span> 
+<button id="src-linkedin" onclick="toggleSumber('src-linkedin')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs w-12 text-center transition-colors">ON</button>
+</div>
+<div class="flex justify-between items-center">
+<span id="label-github" class="text-gray-400">GitHub</span> 
+<button id="src-github" onclick="toggleSumber('src-github')" class="bg-gray-300 text-white px-2 py-1 rounded text-xs w-12 text-center transition-colors">OFF</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-white rounded border border-gray-200 shadow-sm overflow-hidden mb-6">
+<div class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+<h3 class="font-medium text-gray-700 text-sm">Antrean Pelacakan (Data Baru)</h3>
+<button onclick="jalankanPelacakan()" class="bg-blue-600 text-white px-3 py-1.5 rounded text-xs hover:bg-blue-700 shadow-sm transition"><i class="fas fa-play mr-1"></i> Jalankan Job Sekarang</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
+<tr>
+<th class="px-4 py-3 font-medium">No</th>
+<th class="px-4 py-3 font-medium">Nama Lengkap</th>
+<th class="px-4 py-3 font-medium">NIM</th>
+<th class="px-4 py-3 font-medium">Tahun Lulus</th>
+<th class="px-4 py-3 font-medium">Status Saat Ini</th>
+</tr>
+</thead>
+<tbody id="tbody-antrean-pelacakan" class="divide-y divide-gray-100"></tbody>
+</table>
+</div>
+</div>
+
+<div class="bg-white rounded border border-gray-200 shadow-sm overflow-hidden mb-6">
+<div class="px-4 py-3 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+<h3 class="font-medium text-gray-700 text-sm">Log Query Pencarian</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 text-gray-500 border-b border-gray-200">
+<tr>
+<th class="px-4 py-3 font-medium">Alumni</th>
+<th class="px-4 py-3 font-medium">Query</th>
+<th class="px-4 py-3 font-medium">Sumber Terpilih</th>
+<th class="px-4 py-3 font-medium">Confidence Skor</th>
+<th class="px-4 py-3 font-medium">Hasil Sistem</th>
+</tr>
+</thead>
+<tbody id="tbody-log-query" class="divide-y divide-gray-100"></tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="view-verifikasi" class="hidden">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-normal text-gray-700">Verifikasi Manual</h2>
+<span class="text-sm text-gray-500 bg-white border border-gray-300 px-3 py-1.5 rounded">Antrean: <span id="veri-queue-count" class="font-bold text-gray-800">0</span> alumni</span>
+</div>
+<div id="container-verifikasi" class="space-y-6"></div>
+</div>
+
+</div>
+
+<div id="modal-tambah" class="fixed inset-0 bg-gray-900/40 hidden z-50 flex items-center justify-center backdrop-blur-sm transition-opacity">
+  <div class="bg-white rounded-lg shadow-xl w-[400px] overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+      <h3 class="font-medium text-gray-800">Tambah Data Alumni Baru</h3>
+      <button onclick="tutupModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-6 space-y-4 text-sm">
+      <div>
+        <label class="block text-gray-600 mb-1">Nama Lengkap</label>
+        <input type="text" id="input-nama" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Contoh: Muhammad Reza">
+      </div>
+      <div>
+        <label class="block text-gray-600 mb-1">NIM</label>
+        <input type="text" id="input-nim" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Contoh: 202310370311000">
+      </div>
+      <div>
+        <label class="block text-gray-600 mb-1">Tahun Lulus</label>
+        <input type="number" id="input-tahun" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Contoh: 2024">
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-100 flex justify-end space-x-2 bg-gray-50">
+      <button onclick="tutupModal()" class="px-4 py-2 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-100">Batal</button>
+      <button onclick="simpanDataBaru()" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Simpan Data</button>
+    </div>
+  </div>
+</div>
+</main>
+
+<script src="Data.js"></script>
+<script src="Main.js"></script>
+</body>
+</html>
