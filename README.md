@@ -29,14 +29,14 @@ Sistem Pelacakan Alumni Publik adalah aplikasi berbasis web (Single Page Applica
 
 Berikut adalah hasil pengujian aplikasi berdasarkan aspek kualitas perangkat lunak yang telah ditentukan pada desain *Daily Project 2*:
 
-| Aspek Kualitas | Skenario Pengujian | Hasil yang Diharapkan | Status | Keterangan |
+| Aspek Kualitas | Skenario Pengujian (Test Case) | Hasil yang Diharapkan (Expected Result) | Status | Keterangan |
 | :--- | :--- | :--- | :---: | :--- |
-| **Functional Suitability** | Menambahkan data alumni baru melalui Modal Form. | Data baru berhasil ditambahkan ke antrean dengan status *default* "Belum Dilacak". | ✅ Pass | Fungsi `simpanDataBaru()` berjalan dengan baik dan angka dashboard ter-update. |
-| **Functional Suitability** | Menjalankan *Job Pelacakan* pada data baru. | Sistem memberikan skor *random*, lalu mendistribusikan data ke status "Teridentifikasi" (>80), "Perlu Verifikasi" (60-80), atau "Tidak Ditemukan" (<60). | ✅ Pass | Algoritma *scoring* dan kondisi IF/ELSE berjalan sesuai algoritma *pseudocode*. |
-| **Functional Suitability** | Memilih keputusan "Kandidat Valid" pada menu Verifikasi Manual. | Status data berubah menjadi "Teridentifikasi", skor menjadi 100, dan data pindah ke tabel Data Alumni. | ✅ Pass | Fungsi `prosesVerifikasi()` bekerja dengan baik menghapus antrean. |
-| **Usability** | Navigasi menu sidebar (Dashboard, Data Alumni, Pelacakan, Verifikasi). | Halaman berpindah secara instan tanpa perlu *reload browser* (SPA) dan tombol menu yang aktif berubah warna. | ✅ Pass | Manipulasi DOM `switchView()` berfungsi lancar. |
-| **Usability** | Mencari nama atau NIM di halaman Data Alumni. | Tabel langsung menyaring dan menampilkan baris data yang relevan dengan karakter yang diketik pengguna. | ✅ Pass | Fungsi *real-time filtering* merespon ketikan dengan instan. |
-| **Performance Efficiency** | Merender data statistik pada 4 kartu utama di Dashboard. | Angka pada kartu (Total, Selesai, Antrean) langsung dikalkulasi dan di-render dalam hitungan milidetik setelah data diubah. | ✅ Pass | Penggunaan filter array bawaan JavaScript sangat cepat dan efisien. |
+| **Functional Suitability** (Fungsionalitas) | Melakukan otentikasi Login sebagai Admin Kampus. | Sistem memvalidasi kredensial dan mengarahkan pengguna ke halaman Dashboard. | ✅ Pass | Pengguna memasukkan akun *default* (Username: `admin`, Password: `admin123`) pada form login dan berhasil masuk ke dalam sistem utama. |
+| **Functional Suitability** | Menambahkan data alumni baru melalui Modal Form. | Data berhasil ditambahkan dan masuk ke dalam antrean pelacakan dengan status *default* "Belum Dilacak". | ✅ Pass | Admin mengisi form (Nama, NIM, Tahun). Setelah disimpan, data belum masuk ke tabel Data Alumni, melainkan diarahkan terlebih dahulu ke halaman antrean "Job Pelacakan". |
+| **Functional Suitability** | Menjalankan tombol *Jalankan Job Sekarang* pada halaman Pelacakan. | Sistem memproses antrean data baru, menghitung skor kecocokan, dan menetapkan status akhir. | ✅ Pass | **Sesuai alur logika:** Jika skor **> 80** otomatis langsung berstatus *Teridentifikasi*. Jika skor berada di antara **60 - 80**, data akan dialihkan ke menu *Verifikasi Manual*. Jika skor **< 60**, otomatis menjadi *Tidak Ditemukan* (tidak valid). |
+| **Functional Suitability** | Meninjau data ambigu pada halaman Verifikasi Manual. | Admin dapat memeriksa detail kandidat dan memberikan keputusan akhir (Valid/Tidak Cocok). | ✅ Pass | Admin mengecek data alumni dengan skor 60-80. Jika diklik "Kandidat Valid", skor menjadi 100 dan status finalnya menjadi *Teridentifikasi* lalu masuk ke Data Alumni yang sudah dilacak. |
+| **Usability** (Kebergunaan) | Menggunakan navigasi Sidebar dan mencari data pada kolom Search. | Halaman berpindah secara instan (SPA) dan tabel menampilkan hasil spesifik dari kata kunci (Nama/NIM). | ✅ Pass | Alur UI sangat mulus tanpa perlu *reload* halaman (*Single Page Application*). Kolom pencarian memfilter baris data secara *real-time* sesuai ketikan admin. |
+| **Performance Efficiency** (Performa) | Merender ulang kalkulasi angka dan tabel (Refresh UI). | Angka pada kartu (Total, Selesai, Antrean) langsung dikalkulasi ulang setiap ada aksi penambahan/validasi. | ✅ Pass | Penggunaan filter *array* bawaan JavaScript mengeksekusi hitungan dan render DOM dalam hitungan milidetik secara efisien. |
 
 ---
 
