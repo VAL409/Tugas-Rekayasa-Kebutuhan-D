@@ -29,14 +29,14 @@ Sistem Pelacakan Alumni Publik adalah aplikasi berbasis web (Single Page Applica
 
 Berikut adalah hasil pengujian aplikasi berdasarkan aspek kualitas perangkat lunak yang telah ditentukan pada desain *Daily Project 2*:
 
-| Aspek Kualitas | Skenario Pengujian (Test Case) | Hasil yang Diharapkan (Expected Result) | Status | Keterangan |
+| Aspek Kualitas | Skenario Pengujian | Hasil yang Diharapkan | Status | Keterangan |
 | :--- | :--- | :--- | :---: | :--- |
-| **Functional Suitability** (Fungsionalitas) | Menambahkan data alumni baru melalui Modal Form. | Data baru berhasil ditambahkan ke antrean dengan status *default* "Belum Dilacak". | ✅ Pass | Fungsi `simpanDataBaru()` berjalan dengan baik dan angka dashboard ter-update. |
+| **Functional Suitability** | Menambahkan data alumni baru melalui Modal Form. | Data baru berhasil ditambahkan ke antrean dengan status *default* "Belum Dilacak". | ✅ Pass | Fungsi `simpanDataBaru()` berjalan dengan baik dan angka dashboard ter-update. |
 | **Functional Suitability** | Menjalankan *Job Pelacakan* pada data baru. | Sistem memberikan skor *random*, lalu mendistribusikan data ke status "Teridentifikasi" (>80), "Perlu Verifikasi" (60-80), atau "Tidak Ditemukan" (<60). | ✅ Pass | Algoritma *scoring* dan kondisi IF/ELSE berjalan sesuai algoritma *pseudocode*. |
 | **Functional Suitability** | Memilih keputusan "Kandidat Valid" pada menu Verifikasi Manual. | Status data berubah menjadi "Teridentifikasi", skor menjadi 100, dan data pindah ke tabel Data Alumni. | ✅ Pass | Fungsi `prosesVerifikasi()` bekerja dengan baik menghapus antrean. |
-| **Usability** (Kebergunaan) | Navigasi menu sidebar (Dashboard, Data Alumni, Pelacakan, Verifikasi). | Halaman berpindah secara instan tanpa perlu *reload browser* (SPA) dan tombol menu yang aktif berubah warna. | ✅ Pass | Manipulasi DOM `switchView()` berfungsi lancar. |
+| **Usability** | Navigasi menu sidebar (Dashboard, Data Alumni, Pelacakan, Verifikasi). | Halaman berpindah secara instan tanpa perlu *reload browser* (SPA) dan tombol menu yang aktif berubah warna. | ✅ Pass | Manipulasi DOM `switchView()` berfungsi lancar. |
 | **Usability** | Mencari nama atau NIM di halaman Data Alumni. | Tabel langsung menyaring dan menampilkan baris data yang relevan dengan karakter yang diketik pengguna. | ✅ Pass | Fungsi *real-time filtering* merespon ketikan dengan instan. |
-| **Performance Efficiency** (Performa) | Merender data statistik pada 4 kartu utama di Dashboard. | Angka pada kartu (Total, Selesai, Antrean) langsung dikalkulasi dan di-render dalam hitungan milidetik setelah data diubah. | ✅ Pass | Penggunaan filter array bawaan JavaScript sangat cepat dan efisien. |
+| **Performance Efficiency** | Merender data statistik pada 4 kartu utama di Dashboard. | Angka pada kartu (Total, Selesai, Antrean) langsung dikalkulasi dan di-render dalam hitungan milidetik setelah data diubah. | ✅ Pass | Penggunaan filter array bawaan JavaScript sangat cepat dan efisien. |
 
 ---
 
